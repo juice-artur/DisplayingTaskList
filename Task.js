@@ -164,6 +164,7 @@ function createTask(task)
     let postEndpoint = 'https://localhost:5001/api/Task';
     task.taskListId = 1;
     task.id = 1;
+    task.dueDate = new Date(task.dueDate);
     return fetch(postEndpoint,
     {
         method : 'POST',
