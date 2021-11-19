@@ -43,7 +43,6 @@ _body.appendChild(changeModeButton);
 
 
 function createAndAppendTaskNode(task) {
-   /* const {taskListId, title, description, dueDate, done} = task;*/
     taskListId = task.taskListId;
     title = task.title;
     description = task.description;
@@ -141,44 +140,19 @@ taskForm.addEventListener('submit', (event) => {
     const formData = new FormData(taskForm);
     const task = new Task( Object.fromEntries(formData.entries()));
     taskForm.reset();
-    createTask(task)
+    taskApi.createTask(task)
+        .then(response => response.json())
         .then(createAndAppendTaskNode);
     
 });
 
 
-function createTask(task)
-{
-    let postEndpoint = 'https://localhost:5001/api/Task';
-    task.taskListId = 1;
-    task.dueDate = new Date(task.dueDate);
-    return fetch(postEndpoint,
-    {
-        method : 'POST',
-        headers:
-            {
-                'Content-Type': 'application/json'   
-            },
-            body: JSON.stringify(task)
-    })
-        .then(response => response.json())
-}
-//Винисти в функцию 174 -178
 function clickedTaskCheckBox(task, flag)
 {
     task.done = flag.checked;
     let head = flag.parentNode;
     let root = head.parentNode.parentNode;
-    let Endpoint = `https://localhost:5001/api/Task/${task.id}`;
-    task.taskListId = 1
-    fetch(Endpoint,{
-        method : 'PATCH',
-        headers:
-            {
-                'Content-Type': 'application/json'
-            },
-        body: JSON.stringify(task)
-    })
+    taskApi.patchTask(task)
         .then(() => {
             root.classList.toggle('done', flag.checked);
             const dateNode = root.querySelector('.date');
@@ -190,13 +164,40 @@ function clickedTaskCheckBox(task, flag)
 window.onload = showTasks;
 
 const baseApiUrl = 'https://localhost:5001/api';
-//
+
+
 const taskApi = {    
     getOpenTasks() {        
         return fetch(baseApiUrl + '/TaskList/1/tasks?isOpen=false')
             .then(response => response.json())
-    }
+    },
+    createTask(task)
+    {
+        task.taskListId = 1;
+        task.dueDate = new Date(task.dueDate);
+        return fetch(baseApiUrl +'/Task',
+        {
+            method: 'POST',
+            headers:
+                {
+                    'Content-Type': 'application/json'
+                },
+            body: JSON.stringify(task)
+        })
+    },
     
+    patchTask(task)
+    {
+        task.taskListId = 1
+        return fetch(baseApiUrl + `/Task/${task.id}`,{
+            method : 'PATCH',
+            headers:
+                {
+                    'Content-Type': 'application/json'
+                },
+            body: JSON.stringify(task)
+        })   
+    }
 };
 
 taskApi.getOpenTasks()
