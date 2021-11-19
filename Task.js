@@ -120,11 +120,7 @@ function isExpired(date)
 //Promis fix(remove )
 function onClickDelete(task, button)
 {
-    let deleteEndpoint = `https://localhost:5001/api/Task/${task.id}`;
-    fetch(deleteEndpoint,
-    {
-        method: 'DELETE'
-    })
+    taskApi.deleteTask(task)
         .then(button.parentNode.remove());
 }
 
@@ -197,6 +193,14 @@ const taskApi = {
                 },
             body: JSON.stringify(task)
         })   
+    },
+    
+    deleteTask(task)
+    {
+        return fetch(baseApiUrl + `/Task/${task.id}`,
+            {
+                method: 'DELETE'
+            })
     }
 };
 
