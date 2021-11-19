@@ -18,15 +18,6 @@ class Task {
     }
 }
 
-/*let testTask = [
-    new Task(0, 'Test task', 'first test task', new Date(2021, 11, 28), false),
-    new Task(1, 'Test task 1', 'second test task', new Date(2021, 11, 15), true),
-    new Task(1, "Task without desc", null, new Date(2020, 11, 15), false)
-]*/
-
-
-/*const taskElement = document.getElementById('tasks')*/
-
 function checkEmpty(str) {
     if (str != null && typeof str !== "undefined") {
         if (!str.trim()) {
@@ -122,7 +113,6 @@ function createAndAppendTaskNode(task) {
     }
 }
 
-/*testTask.forEach(createAndAppendTaskNode);*/
 
 function isExpired(date)
 {
@@ -150,8 +140,6 @@ userTask.addEventListener('submit', (event) => {
     event.preventDefault();
     const formData = new FormData(userTask);
     const _task = new Task( Object.fromEntries(formData.entries()));
-    /*testTask.push(_task);*/
-  /*  createAndAppendTaskNode(_task);*/
     userTask.reset();
     createTask(_task)
         .then(createAndAppendTaskNode);
@@ -199,9 +187,6 @@ function clickedTaskCheckBox(task, flag)
         })
     
 }
-
-
-
 
 window.onload = showTasks;
 
