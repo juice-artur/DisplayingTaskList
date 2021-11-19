@@ -1,16 +1,18 @@
 class Task {
-    constructor(taskListId, title, description, dueDate, done) {
+    constructor(taskListId, title, description, dueDate, done, id) {
         if (typeof taskListId === 'object') {
             this.taskListId = taskListId.taskListId;
             this.title = taskListId.title;
             this.description = taskListId.description;
             this.dueDate = taskListId.dueDate;
+            this.id =  taskListId.id;
             this.done = taskListId.done === true || done === 'true';
         } else {
             this.taskListId = taskListId;
             this.title = title;
             this.description = description;
             this.dueDate = dueDate;
+            this.id =  id;
             this.done = done === true || done === 'true';
         }
     }
@@ -56,6 +58,7 @@ function createAndAppendTaskNode(task) {
     description = task.description;
     dueDate = task.dueDate;
     done = task.done;
+    id = task.id;
 
 
     let taskContainer = document.createElement('div');
@@ -136,8 +139,13 @@ function isExpired(date)
 
 function onClickDelete(task, button)
 {
-    button.parentNode.remove();
-    testTask.splice( testTask.indexOf(task), 1);
+    console.log(task.id);
+    let deleteEndpoint = `https://localhost:5001/api/Task/${task.id}`;
+    fetch(deleteEndpoint,
+    {
+        method: 'DELETE'
+    })
+        .then(button.parentNode.remove());
 }
 
 function showTasks(allTasksFlag)
@@ -164,7 +172,7 @@ function createTask(task)
 {
     let postEndpoint = 'https://localhost:5001/api/Task';
     task.taskListId = 1;
-    console.log(task);
+    task.id = 1;
     return fetch(postEndpoint,
     {
         method : 'POST',
@@ -176,6 +184,9 @@ function createTask(task)
     })
         .then(response => response.json())
 }
+
+
+
 
 window.onload = showTasks;
 
