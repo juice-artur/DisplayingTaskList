@@ -110,14 +110,15 @@ function createAndAppendTaskNode(task) {
     taskContainer.appendChild(taskDueDate);
     taskDueDate.classList.add('date');
     taskDueDate.classList.toggle('expired', !done && isExpired(dueDate));
-    if(typeof (dueDate) === "object")
-    {
-        taskDueDate.innerText = dueDate.toLocaleDateString("en-US").toString();
-    }
-    else
-    {
-        if(!checkEmpty(dueDate)) return;
-        taskDueDate.innerText = new Date(dueDate).toLocaleDateString("en-US").toString();
+    if(checkEmpty(dueDate)){
+        if(typeof (dueDate) === "object")
+        {
+            taskDueDate.innerText = dueDate.toLocaleDateString("en-US").toString();
+        }
+        else
+        {
+            taskDueDate.innerText = new Date(dueDate).toLocaleDateString("en-US").toString();
+        }   
     }
 }
 
@@ -130,7 +131,6 @@ function isExpired(date)
 
 function onClickDelete(task, button)
 {
-    console.log(task.id);
     let deleteEndpoint = `https://localhost:5001/api/Task/${task.id}`;
     fetch(deleteEndpoint,
     {
@@ -180,7 +180,6 @@ function createTask(task)
 function clickedTaskCheckBox(task, flag)
 {
     task.done = flag.checked;
-    console.log(task);
     let head = flag.parentNode;
     let root = head.parentNode.parentNode;
     let Endpoint = `https://localhost:5001/api/Task/${task.id}`;
