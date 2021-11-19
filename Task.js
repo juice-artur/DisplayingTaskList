@@ -117,7 +117,7 @@ function isExpired(date)
 {
     return new Date(date) < Date.now();
 }
-//Promis fix(remove )
+
 function onClickDelete(task, button)
 {
     taskApi.deleteTask(task)
@@ -128,6 +128,8 @@ function showTasks(allTasksFlag)
 {
     let tasks = document.querySelector('#tasks');
     tasks.classList.toggle('hide',  !allTasksFlag.checked)
+    
+    
 }
 
 const taskForm = document.forms['taskForm'];
@@ -164,7 +166,7 @@ const baseApiUrl = 'https://localhost:5001/api';
 
 const taskApi = {    
     getOpenTasks() {        
-        return fetch(baseApiUrl + '/TaskList/1/tasks?isOpen=false')
+        return fetch(baseApiUrl + '/TaskList/1/all-tasks')
             .then(response => response.json())
     },
     createTask(task)
