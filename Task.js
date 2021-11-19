@@ -192,12 +192,12 @@ function clickedTaskCheckBox(task, flag)
             },
         body: JSON.stringify(task)
     })
-        .then(response => response.json())
-
-
-    root.classList.toggle('done', flag.checked);
-    const dateNode = root.querySelector('.date');
-    dateNode.classList.toggle('expired', !flag.checked && isExpired(dateNode.textContent));
+        .then(() => {
+            root.classList.toggle('done', flag.checked);
+            const dateNode = root.querySelector('.date');
+            dateNode.classList.toggle('expired', !flag.checked && isExpired(dateNode.textContent));
+        })
+    
 }
 
 
