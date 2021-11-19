@@ -118,7 +118,7 @@ function isExpired(date)
 {
     return new Date(date) < Date.now();
 }
-
+//Promis fix(remove )
 function onClickDelete(task, button)
 {
     let deleteEndpoint = `https://localhost:5001/api/Task/${task.id}`;
@@ -135,13 +135,13 @@ function showTasks(allTasksFlag)
     tasks.classList.toggle('hide',  !allTasksFlag.checked)
 }
 
-const userTask = document.forms['taskForm'];
-userTask.addEventListener('submit', (event) => {
+const taskForm = document.forms['taskForm'];
+taskForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    const formData = new FormData(userTask);
-    const _task = new Task( Object.fromEntries(formData.entries()));
-    userTask.reset();
-    createTask(_task)
+    const formData = new FormData(taskForm);
+    const task = new Task( Object.fromEntries(formData.entries()));
+    taskForm.reset();
+    createTask(task)
         .then(createAndAppendTaskNode);
     
 });
@@ -151,7 +151,6 @@ function createTask(task)
 {
     let postEndpoint = 'https://localhost:5001/api/Task';
     task.taskListId = 1;
-    task.id = 1;
     task.dueDate = new Date(task.dueDate);
     return fetch(postEndpoint,
     {
@@ -164,7 +163,7 @@ function createTask(task)
     })
         .then(response => response.json())
 }
-
+//Винисти в функцию 174 -178
 function clickedTaskCheckBox(task, flag)
 {
     task.done = flag.checked;
@@ -190,9 +189,17 @@ function clickedTaskCheckBox(task, flag)
 
 window.onload = showTasks;
 
+const baseApiUrl = 'https://localhost:5001/api';
+//
+const taskApi = {    
+    getOpenTasks() {        
+        return fetch(baseApiUrl + '/TaskList/1/tasks?isOpen=false')
+            .then(response => response.json())
+    }
+    
+};
 
-fetch('https://localhost:5001/api/TaskList/1/tasks?isOpen=false')
-    .then(response => response.json())
+taskApi.getOpenTasks()
     .then(testTask => testTask.forEach(createAndAppendTaskNode));
 
  
