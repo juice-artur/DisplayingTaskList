@@ -1,0 +1,146 @@
+*
+{
+    margin: 0;   
+}
+body{
+    background-color:#2272B8 ;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+#main-title
+{
+    display:flex;
+    justify-content: center;
+    color: white;
+    
+}
+.change-hide p{
+    color :white;
+    padding-right: 10px;
+}
+
+.format-task-to-show
+{
+    position: relative;
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    background:white;
+    width: 100%;
+    min-height: 100px;
+    min-width: 400px;
+    justify-content: space-between;
+    outline: 2px solid #000;
+    border: 3px solid #fff;
+    border-radius: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.change-hide
+{
+    display:flex;
+    justify-content: center;
+}
+.change-mode-button
+{
+    vertical-align:top;
+}
+
+
+input
+{
+   transform: scale(1.5);
+}
+.task-check-box
+{
+    margin-left: auto;
+    width: 2.5%;
+    font-size: x-large;
+    height: max-content;
+}
+
+.desc-p {
+    width: 92.5%;
+    height: max-content;
+    padding-bottom: 10px;
+}
+
+
+.task-title
+{
+    text-decoration:none;
+    margin-right: 4%;
+    width: 92.5%;
+    color: black;
+    font-weight: 600;
+    font-size: x-large;
+}
+.task-head
+{
+    height: min-content;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.date
+{
+    margin-left: auto;
+    color: black;
+}
+
+.expired
+{
+    margin-left: auto;
+    
+    color: red;
+}
+
+
+.remove-button{
+    position: absolute;
+    bottom: 0;
+    border: 2px solid red;
+}
+
+
+
+.hide .done{
+    display: none;
+}
+
+
+.done .task-title
+{
+    text-decoration: line-through;
+    text-decoration-color: black;
+    color: grey;;   
+}
+
+
+
+
+#addForm
+{
+    padding-top: 10px;
+    display: flex;
+    flex-direction:row;
+    flex-wrap: wrap;
+    align-items: center;
+    
+}
+#addForm input
+{
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+#tasks
+{
+    display: flex;
+    flex-direction: column;
+}
+
+
