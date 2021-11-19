@@ -123,15 +123,6 @@ function createAndAppendTaskNode(task) {
 
 /*testTask.forEach(createAndAppendTaskNode);*/
 
-function clickedTaskCheckBox(task, flag)
-{
-    let head = flag.parentNode;
-    let root = head.parentNode.parentNode;
-    root.classList.toggle('done', flag.checked);
-    const dateNode = root.querySelector('.date');
-    dateNode.classList.toggle('expired', !flag.checked && isExpired(dateNode.textContent));
-}
-
 function isExpired(date)
 {
     return new Date(date) < Date.now();
@@ -183,6 +174,30 @@ function createTask(task)
             body: JSON.stringify(task)
     })
         .then(response => response.json())
+}
+
+function clickedTaskCheckBox(task, flag)
+{
+    task.done = flag.checked;
+    console.log(task);
+    let head = flag.parentNode;
+    let root = head.parentNode.parentNode;
+    let Endpoint = `https://localhost:5001/api/Task/${task.id}`;
+    task.taskListId = 1
+    fetch(Endpoint,{
+        method : 'PATCH',
+        headers:
+            {
+                'Content-Type': 'application/json'
+            },
+        body: JSON.stringify(task)
+    })
+        .then(response => response.json())
+
+
+    root.classList.toggle('done', flag.checked);
+    const dateNode = root.querySelector('.date');
+    dateNode.classList.toggle('expired', !flag.checked && isExpired(dateNode.textContent));
 }
 
 
